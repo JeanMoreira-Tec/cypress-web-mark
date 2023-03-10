@@ -16,7 +16,7 @@ describe('tarefas', () => {
         it('não deve permitir tarefa duplicada', () => {
 
             const task = {
-                name: 'Estudar gherkin',
+                name: 'Estudar Gherkin',
                 is_done: false
             }
 
@@ -32,6 +32,27 @@ describe('tarefas', () => {
         it('campo obrigatório', () => {
             cy.createTask()
             cy.isRequired('This is a required field')
+        })
+    })
+    context('atualização', () => {
+        it('deve concluir uma tarefa', () => {
+            const task = {
+                name: 'Estudar Cucumber',
+                is_done: false
+            }
+
+            cy.removeTaskByName(task.name)
+            cy.postTask(task)
+
+            cy.visit('http://localhost:8080')
+
+            cy.contains('p', task.name)
+                .parent()
+                .find('button[class*=listItemToggle]')
+                .click()
+
+            cy.contains('p', task.name)
+                .should('have.css', 'text-decoration-line', 'line-through')
         })
     })
 })
