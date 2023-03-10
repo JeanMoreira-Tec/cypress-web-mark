@@ -1,6 +1,15 @@
 /// <reference types="cypress" />
 
 describe('tarefas', () => {
+
+    let testData;
+
+    before(() => {
+        cy.fixture('tasks').then(t => {
+            testData = t
+        })
+    })
+
     context('Cadastro', () => {
         it('deve cadastra uma nova tarefa', () => {
 
@@ -15,10 +24,7 @@ describe('tarefas', () => {
 
         it('não deve permitir tarefa duplicada', () => {
 
-            const task = {
-                name: 'Estudar Gherkin',
-                is_done: false
-            }
+            const task = testData.dup
 
             cy.removeTaskByName(task.name)
             cy.postTask(task)
@@ -37,14 +43,14 @@ describe('tarefas', () => {
     context('atualização', () => {
         it('deve concluir uma tarefa', () => {
             const task = {
-                name: 'Estudar Cucumber',
+                name: 'Estudar BDD',
                 is_done: false
             }
 
             cy.removeTaskByName(task.name)
             cy.postTask(task)
 
-            cy.visit('http://localhost:8080')
+            cy.visit('/')
 
             cy.contains('p', task.name)
                 .parent()
@@ -65,7 +71,7 @@ describe('tarefas', () => {
             cy.removeTaskByName(task.name)
             cy.postTask(task)
 
-            cy.visit('http://localhost:8080')
+            cy.visit('/')
 
             cy.contains('p', task.name)
                 .parent()
