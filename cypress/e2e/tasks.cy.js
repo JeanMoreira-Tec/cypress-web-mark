@@ -55,4 +55,25 @@ describe('tarefas', () => {
                 .should('have.css', 'text-decoration-line', 'line-through')
         })
     })
+    context('exclusão', () => {
+        it('deve excluir uma tarefa', () => {
+            const task = {
+                name: 'Estudar Robot',
+                is_done: false
+            }
+
+            cy.removeTaskByName(task.name)
+            cy.postTask(task)
+
+            cy.visit('http://localhost:8080')
+
+            cy.contains('p', task.name)
+                .parent()
+                .find('button[class*=listItemDelete]')
+                .click()
+
+            cy.contains('p', task.name)
+                .should('not.exist')
+        })
+    })
 })
