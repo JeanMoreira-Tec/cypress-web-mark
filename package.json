@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Projeto de testes de ponto a ponta no Mark L",
   "main": "index.js",
-  "repository": "https://github.com/JeanMoreira-Tec/cypress-express-mark.git",
+  "repository": "https://github.com/JeanMoreira-Tec/cypress-web-mark.git",
   "author": "Jean Moreira",
   "license": "MIT",
   "devDependencies": {
